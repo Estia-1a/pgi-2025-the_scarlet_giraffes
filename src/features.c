@@ -47,16 +47,20 @@ void first_pixel (char *source_path){
 
 void second_line(char *source_path){
     unsigned char *data;
-    int width, height, channel_count;
-    int resultat = read_image_data(source_path, &data, &width, &height, &channel_count);
-    if (read_image_data(source_path, &data, &width, &height, &channel_count)) {
-    }
-         if (resultat){
-        printf("second_line: %d, %d, %d\n", data[4464], data[4465], data[4466]);
-    }
-    else{
-        printf("ERROR");
-    }
+    int height;
+    int channel_count;
+    int width; 
+    if (read_image_data(source_path, &data, &width, &height, &channel_count) != 0) {
+        if(height<2){
+            printf("L'image doit avoir au moins 2 pixels en ligne") ;
+        }
+        int R = data[3 * width + 0];
+        int G = data[3 * width + 1];
+        int B = data[3 * width + 2]; 
+        printf("second_line: %d, %d, %d\n", R, G, B);
+        }
+        
+        
 }
 void tenth_pixel(char *source_path){
     unsigned char *data;
