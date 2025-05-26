@@ -53,6 +53,9 @@ int main(int argc, char **argv) {
   if (strncmp(configuration.command, "color_red", 9) == 0) {
   color_red(configuration.filenames[0]);
   }
+  if (strncmp(configuration.command, "color_blue", 10) == 0) {
+  color_blue(configuration.filenames[0]);
+  }
 
   /*
    * TO COMPLETE

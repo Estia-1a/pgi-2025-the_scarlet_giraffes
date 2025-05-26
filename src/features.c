@@ -111,3 +111,21 @@ void color_red(char *source_path){
         printf("ERROR");
     }
 }
+
+void color_blue(char *source_path){
+    unsigned char* data;
+    int width;
+    int height;
+    int channel_count;
+    int i;
+    if (read_image_data(source_path, &data, &width, &height, &channel_count) !=0){
+        for(i=0; i<height*width; i++){
+            data[i*channel_count] = 0;
+            data[i*channel_count + 1] = 0;
+        }
+        write_image_data("image_out.bmp", data, width, width);
+    }
+    else{
+        printf("ERROR");
+    }
+}
