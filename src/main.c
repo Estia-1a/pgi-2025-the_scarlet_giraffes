@@ -48,16 +48,20 @@ int main(int argc, char **argv) {
   }
   if (strncmp(configuration.command, "print_pixel", 10) == 0) {
     /* print_pixel() function is defined in feature.h and implemented in feature.c */
-  print_pixel(configuration.filenames[0], atoi(configuration.arguments[0]), atoi(configuration.arguments[1]));
+    print_pixel(configuration.filenames[0], atoi(configuration.arguments[0]), atoi(configuration.arguments[1]));
   }
   if (strncmp(configuration.command, "color_red", 9) == 0) {
-  color_red(configuration.filenames[0]);
+    color_red(configuration.filenames[0]);
   }
   if (strncmp(configuration.command, "color_blue", 10) == 0) {
-  color_blue(configuration.filenames[0]);
+    color_blue(configuration.filenames[0]);
   }
   if (strncmp(configuration.command, "color_green", 11) == 0) {
-  color_green(configuration.filenames[0]);
+    color_green(configuration.filenames[0]);
+  }
+  if ( strncmp( configuration.command, "min_component", 13) == 0 ) {
+    char *c = configuration.arguments[0] ;
+    min_component(configuration.filenames[0], *c) ;
   }
 
   /*
