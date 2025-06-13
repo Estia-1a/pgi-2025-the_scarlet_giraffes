@@ -63,6 +63,10 @@ int main(int argc, char **argv) {
     char *c = configuration.arguments[0] ;
     min_component(configuration.filenames[0], *c) ;
   }
+  if ( strncmp( configuration.command, "max_component", 13) == 0 ) {
+    char *c = configuration.arguments[0] ;
+    max_component(configuration.filenames[0], *c) ;
+  }
 
   /*
    * TO COMPLETE

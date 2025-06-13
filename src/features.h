@@ -22,4 +22,6 @@ void color_green(char *source_path);
 
 void min_component (char *source_path, char c) ;
 
+void max_component (char *source_path, char c) ;
+
 #endif

@@ -179,3 +179,36 @@ void min_component (char *source_path, char c) {
         printf("Error\n");
     }
 }
+
+void max_component (char *source_path, char c) {
+    int width ;
+    int height ;
+    int channel_count ;
+    unsigned char *data ;
+    int i, j ;
+    int nr, xr, yr, max_R ;
+
+    if (read_image_data(source_path, &data, &width, &height, &channel_count) != 0) {
+        max_R = data[0] ;
+        nr = 0 ;
+        for (i = 3; i < width*height*3; i = i + 3) {
+            if (data[i] > max_R) {
+                max_R = data[i] ;
+                nr = i/3 ;
+            }
+        }
+        for (j = 0; j < height; j++) {
+            if (nr >= width*j && nr <= width*j + width - 1) {
+                xr = j ;
+                yr = nr - width*xr ;
+            }
+        }
+
+        if (c == 'R') {
+            printf ("max_component R (%d, %d): %d\n", yr, xr, max_R) ;
+        }
+    }
+    else {
+        printf("ERROR");
+    }
+}
