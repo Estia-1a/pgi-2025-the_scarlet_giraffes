@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
     /* first_pixel() function is defined in feature.h and implemented in feature.c */
     tenth_pixel(configuration.filenames[0]);
   }
-  if (strncmp(configuration.command, "print_pixel", 10) == 0) {
+  if (strncmp(configuration.command, "print_pixel", 11) == 0) {
     /* print_pixel() function is defined in feature.h and implemented in feature.c */
     print_pixel(configuration.filenames[0], atoi(configuration.arguments[0]), atoi(configuration.arguments[1]));
   }
@@ -66,6 +66,10 @@ int main(int argc, char **argv) {
   if ( strncmp( configuration.command, "max_component", 13) == 0 ) {
     char *c = configuration.arguments[0] ;
     max_component(configuration.filenames[0], *c) ;
+  }
+
+  if ( strncmp( configuration.command, "max_pixel", 9 ) == 0 ) {
+    max_pixel(configuration.filenames[0]);
   }
 
   /*
