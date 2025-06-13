@@ -94,6 +94,92 @@ void print_pixel(char *source_path, int x, int y){
     }
 }
 
+void color_red(char *source_path){
+    unsigned char* data;
+    int width;
+    int height;
+    int channel_count;
+    int i;
+    if (read_image_data(source_path, &data, &width, &height, &channel_count) !=0){
+        for(i=0; i<height*width; i++){
+            data[i*channel_count + 1] = 0;
+            data[i*channel_count + 2] = 0;
+        }
+        write_image_data("image_out.bmp", data, width, width);
+    }
+    else{
+        printf("ERROR");
+    }
+}
+
+void color_blue(char *source_path){
+    unsigned char* data;
+    int width;
+    int height;
+    int channel_count;
+    int i;
+    if (read_image_data(source_path, &data, &width, &height, &channel_count) !=0){
+        for(i=0; i<height*width; i++){
+            data[i*channel_count] = 0;
+            data[i*channel_count + 1] = 0;
+        }
+        write_image_data("image_out.bmp", data, width, width);
+    }
+    else{
+        printf("ERROR");
+    }
+}
+
+void color_green(char *source_path){
+    unsigned char* data;
+    int width;
+    int height;
+    int channel_count;
+    int i;
+    if (read_image_data(source_path, &data, &width, &height, &channel_count) !=0){
+        for(i=0; i<height*width; i++){
+            data[i*channel_count] = 0;
+            data[i*channel_count + 2] = 0;
+        }
+        write_image_data("image_out.bmp", data, width, width);
+    }
+    else{
+        printf("ERROR");
+    }
+}
+void min_component (char *source_path, char c) {
+    int width ;
+    int height ;
+    int channel_count ;
+    unsigned char *data ;
+    int i, j;
+    int ng, xg, yg, min_G ;
+
+    if (read_image_data(source_path, &data, &width, &height, &channel_count) != 0) {
+        min_G = data[1] ;
+        ng = 1 ;
+        for (i = 3; i < width*height*3; i = i + 3) {
+            if (data[i+1] < min_G) {
+                min_G = data[i+1] ;
+                ng = i/3 ;
+            }
+        }
+        for (j = 0; j < height; j++) {
+            if (ng >= width*j && ng <= width*j + width - 1) {
+                xg = j ;
+                yg = ng - width*xg ;
+            }
+        }
+
+        if (c == 'G') {
+            printf ("min_component G (%d, %d): %d\n", yg, xg, min_G) ;
+        }
+    }
+    else {
+        printf("Error\n");
+    }
+}
+
 void max_pixel (char *source_path){
     int width, height, channel_count;
     int i, j, n, x, y;
