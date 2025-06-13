@@ -230,14 +230,21 @@ void max_component (char *source_path, char c) {
     unsigned char *data ;
     int i, j ;
     int nr, xr, yr, max_R ;
+    int nb, xb, yb, max_B;
 
     if (read_image_data(source_path, &data, &width, &height, &channel_count) != 0) {
         max_R = data[0] ;
+        max_B = data[2];
         nr = 0 ;
+        nb = 2;
         for (i = 3; i < width*height*3; i = i + 3) {
             if (data[i] > max_R) {
                 max_R = data[i] ;
                 nr = i/3 ;
+            }
+            if (data[i+2] > max_B){
+                max_B = data[i+2];
+                nb = i/3;
             }
         }
         for (j = 0; j < height; j++) {
@@ -245,10 +252,17 @@ void max_component (char *source_path, char c) {
                 xr = j ;
                 yr = nr - width*xr ;
             }
+            if (nb >= width*j && nb <= width*j + width - 1){
+                xb = j;
+                yb = nb - width*xb;
+            }
         }
 
         if (c == 'R') {
             printf ("max_component R (%d, %d): %d\n", yr, xr, max_R) ;
+        }
+        else if (c == 'B') {
+            printf ("max_component B (%d, %d): %d\n", yb, xb, max_B) ;
         }
     }
     else {
