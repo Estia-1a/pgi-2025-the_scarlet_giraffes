@@ -153,33 +153,47 @@ void min_component (char *source_path, char c) {
     int channel_count ;
     unsigned char *data ;
     int i, j;
+    int nr, xr, yr, min_R ;
     int ng, xg, yg, min_G ;
 
     if (read_image_data(source_path, &data, &width, &height, &channel_count) != 0) {
+        min_R = data[0];
         min_G = data[1] ;
+        nr = 0 ;
         ng = 1 ;
         for (i = 3; i < width*height*3; i = i + 3) {
+            if (data[i] < min_R){
+                min_R = data[i];
+                nr = i/3;
+            }
             if (data[i+1] < min_G) {
                 min_G = data[i+1] ;
                 ng = i/3 ;
             }
         }
         for (j = 0; j < height; j++) {
+            if (nr >= width*j && nr <= width*j + width - 1){
+                xr = j;
+                yr = nr - width*xr;
+            }
             if (ng >= width*j && ng <= width*j + width - 1) {
                 xg = j ;
                 yg = ng - width*xg ;
             }
         }
 
-        if (c == 'G') {
+        if (c == 'R') {
+            printf ("min_component R (%d, %d): %d\n", yr, xr, min_R) ;
+        }
+        else if (c == 'G') {
             printf ("min_component G (%d, %d): %d\n", yg, xg, min_G) ;
         }
     }
     else {
-        printf("Error\n");
+    printf("Error\n");
     }
+    
 }
-
 void max_pixel (char *source_path){
     int width, height, channel_count;
     int i, j, n, x, y;
