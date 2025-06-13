@@ -241,3 +241,32 @@ void max_component (char *source_path, char c) {
         printf("ERROR");
     }
 }
+void min_pixel (char *source_path) {
+    int width ;
+    int height ;
+    int channel_count ;
+    unsigned char *data ;
+    int i, j, n, x, y ;
+    int min ;
+
+    if (read_image_data(source_path, &data, &width, &height, &channel_count) != 0) {
+        min = data[0] + data[1] + data[2] ;
+        n = 0 ;
+        for (i = 3; i < height*width*3; i = i + 3) {
+            if (data[i] + data[i+1] + data[i+2] < min) {
+                min = data[i] + data[i+1] + data[i+2] ;
+                n = i/3 ;
+            }
+        }
+        for (j = 0; j < height; j++) {
+            if (n >= width*j && n <= width*j + width - 1) {
+                x = j ;
+                y = n - width*x ;
+            }
+        }
+        printf ("min_pixel (%d, %d): %d, %d, %d\n", y, x, data[3*n], data[3*n+1], data[3*n+2]) ;
+    }
+    else {
+        printf("ERROR") ;
+    }
+}
