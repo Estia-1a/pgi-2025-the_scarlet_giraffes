@@ -14,3 +14,5 @@ void tenth_pixel (char *source_path);
 
 void print_pixel( char *source_path, int x, int y );
 #endif
+
+void max_pixel (char *source_path);

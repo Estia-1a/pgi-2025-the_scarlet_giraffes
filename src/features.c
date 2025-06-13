@@ -93,3 +93,32 @@ void print_pixel(char *source_path, int x, int y){
         printf("ERROR");
     }
 }
+
+void max_pixel (char *source_path){
+    int width, height, channel_count;
+    int i, j, n, x, y;
+    int max;
+    unsigned char *data;
+
+    if (read_image_data(source_path, &data, &width, &height, &channel_count) !=0){
+    
+      max = data[0] + data[1] + data[2];
+      n=0;
+      for(i=3; i<height*width*3; i=i+3){
+        if (data[i] + data[i+1] + data[i+2] > max){
+            max = data[i] + data[i+1] + data[i+2] ;
+            n = i/3;
+        }
+      }
+      for (j=0; j<height; j++){
+        if(n>= width*j && n<= width*j + width-1){
+            x=j;
+            y=n-width*x;
+        }
+      }
+        printf("max_pixel (%d, %d): %d, %d, %d\n", y, x, data[3*n], data[3*n+1], data[3*n+2]);
+    }
+    else {
+        printf("ERROR");
+    }
+}
