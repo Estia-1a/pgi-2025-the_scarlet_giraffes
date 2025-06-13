@@ -298,3 +298,18 @@ void min_pixel (char *source_path) {
         printf("ERROR") ;
     }
 }
+
+void color_gray(char *source_path){
+    int width;
+    int height;
+    int channel_count;
+    unsigned char *data;
+    int i;
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+    for(i = 0; i < width*height; i++){
+        data[i*channel_count] = (data[i*channel_count] + data[i*channel_count + 1] + data[i*channel_count + 2]) / 3;
+        data[i*channel_count + 1] = data[i*channel_count];
+        data[i*channel_count + 2] = data[i*channel_count];
+    }
+    write_image_data("image_out.bmp", data, width, height);
+}
