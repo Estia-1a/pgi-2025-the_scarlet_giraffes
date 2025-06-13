@@ -284,3 +284,33 @@ void min_pixel (char *source_path) {
         printf("ERROR") ;
     }
 }
+
+void mirror_vertical(char *source_path) {
+    int width;
+    int height;
+    int channel_count;
+    unsigned char *data;
+
+    if (read_image_data(source_path, &data, &width, &height, &channel_count) != 0) {
+        int ligne, colonne, i;
+        for (ligne = 0; ligne < height; ligne++) {
+            for (colonne = 0; colonne < width / 2; colonne++) {
+                int left = (ligne * width + colonne) * channel_count;
+                int right = (ligne * width + (width - 1 - colonne)) * channel_count;
+
+                for (i = 0; i < channel_count; i++) {
+                    unsigned char temp = data[left + i];
+                    data[left + i] = data[right + i];
+                    data[right + i] = temp;
+                }
+            }
+        }
+        write_image_data("image_out.bmp", data, width, height);
+    } 
+    else {
+        printf("ERROR.\n");
+    }
+}
+
+
+
