@@ -79,6 +79,10 @@ int main(int argc, char **argv) {
     color_gray(configuration.filenames[0]);
   }
 
+  if ( strncmp( configuration.command, "mirror_vertical", 15 ) == 0 ) {
+    mirror_vertical(configuration.filenames[0]) ;
+  }
+
   /*
    * TO COMPLETE
    */

@@ -24,10 +24,12 @@ void min_component (char *source_path, char c) ;
 
 void max_component (char *source_path, char c) ;
 
-#endif
-
 void max_pixel (char *source_path);
 
 void min_pixel (char *source_path) ;
 
+void mirror_vertical (char *source_path) ;
+
 void color_gray(char *source_path);
+
+#endif
