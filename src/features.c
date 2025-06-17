@@ -431,3 +431,18 @@ void mirror_horizontal(char *source_path) {
         printf("ERROR\n");
     }
 }
+
+void color_invert(char *source_path){
+    int width;
+    int height;
+    int channel;
+    unsigned char *data;
+    int i;
+    read_image_data(source_path, &data, &width, &height, &channel);
+    for(i = 0; i < width*height; i++){
+        data[i*channel] = 255 - data[i*channel];
+        data[i*channel + 1] = 255 - data[i*channel + 1];
+        data[i*channel + 2] = 255 - data[i*channel + 2];
+    }
+    write_image_data("image_out.bmp", data, width, height);
+}

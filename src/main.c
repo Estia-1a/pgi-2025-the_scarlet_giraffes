@@ -83,6 +83,10 @@ int main(int argc, char **argv) {
     mirror_vertical(configuration.filenames[0]) ;
   }
 
+  if ( strncmp( configuration.command, "color_invert", 12 ) == 0 ) {
+    color_invert (configuration.filenames[0]) ;
+  }
+
 
   
 
