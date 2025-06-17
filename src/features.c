@@ -374,3 +374,30 @@ void color_desaturate(char *source_path) {
 
     write_image_data(destination_path, data, width, height);
 }
+void mirror_horizontal(char *source_path) {
+    int width;
+    int height;
+    int channel_count;
+    unsigned char *data;
+ 
+    if (read_image_data(source_path, &data, &width, &height, &channel_count) != 0) {
+        int ligne, colonne, top, bottom ;
+        for (ligne = 0; ligne < height / 2; ligne++) {
+            for (colonne = 0; colonne < width; colonne++) {
+                bottom = (ligne * width + colonne) * channel_count;
+                top = ((height - 1 - ligne) * width + colonne) * channel_count;
+ 
+                for (int x = 0; x < channel_count; x++) {
+                    unsigned char temp = data[top + x];
+                    data[top + x] = data[bottom + x];
+                    data[bottom + x] = temp;
+                }
+            }
+        }
+ 
+        write_image_data("image_out.bmp", data, width, height);
+        
+    } else {
+        printf("ERROR\n");
+    }
+}

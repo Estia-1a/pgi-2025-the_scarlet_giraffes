@@ -34,4 +34,6 @@ void color_gray(char *source_path);
 
 void color_desaturate(char *source_path);
 
+void mirror_horizontal(char *source_path);
+
 #endif
