@@ -80,6 +80,10 @@ int main(int argc, char **argv) {
     mirror_vertical(configuration.filenames[0]) ;
   }
 
+
+  
+
+
   /*
    * TO COMPLETE
    */
