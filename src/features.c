@@ -231,12 +231,15 @@ void max_component (char *source_path, char c) {
     int i, j ;
     int nr, xr, yr, max_R ;
     int nb, xb, yb, max_B;
+    int ng, xg, yg, max_G;
 
     if (read_image_data(source_path, &data, &width, &height, &channel_count) != 0) {
         max_R = data[0] ;
         max_B = data[2];
+        max_G = data[1] ;
         nr = 0 ;
         nb = 2;
+        ng = 1 ;
         for (i = 3; i < width*height*3; i = i + 3) {
             if (data[i] > max_R) {
                 max_R = data[i] ;
@@ -245,6 +248,10 @@ void max_component (char *source_path, char c) {
             if (data[i+2] > max_B){
                 max_B = data[i+2];
                 nb = i/3;
+            }
+            if (data[i+1] > max_G) {
+                max_G = data[i+1] ;
+                ng = i/3 ;
             }
         }
         for (j = 0; j < height; j++) {
@@ -256,6 +263,11 @@ void max_component (char *source_path, char c) {
                 xb = j;
                 yb = nb - width*xb;
             }
+            if (ng >= width*j && ng <= width*j + width - 1) {
+                xg = j ;
+                yg = ng - width*xg ;
+            }
+
         }
 
         if (c == 'R') {
@@ -263,6 +275,9 @@ void max_component (char *source_path, char c) {
         }
         else if (c == 'B') {
             printf ("max_component B (%d, %d): %d\n", yb, xb, max_B) ;
+        }
+        else if (c == 'G') {
+            printf ("max_component G (%d, %d): %d\n", yg, xg, max_G) ;
         }
     }
     else {
