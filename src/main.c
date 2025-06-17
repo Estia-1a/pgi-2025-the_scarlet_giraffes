@@ -83,6 +83,10 @@ int main(int argc, char **argv) {
     mirror_vertical(configuration.filenames[0]) ;
   }
 
+
+  
+
+
   if (strncmp(configuration.command, "color_desaturate", 16) == 0) {
     color_desaturate(configuration.filenames[0]);
   }

@@ -30,9 +30,6 @@ void min_pixel (char *source_path) ;
 
 void mirror_vertical (char *source_path) ;
 
-void color_gray(char *source_path);
-
-void color_desaturate(char *source_path);
 
 void mirror_horizontal(char *source_path);
 
