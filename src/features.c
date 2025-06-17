@@ -328,3 +328,48 @@ void mirror_vertical(char *source_path) {
 }
 
 
+
+void color_gray(char *source_path){
+    int width;
+    int height;
+    int channel_count;
+    unsigned char *data;
+    int i;
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+    for(i = 0; i < width*height; i++){
+        data[i*channel_count] = (data[i*channel_count] + data[i*channel_count + 1] + data[i*channel_count + 2]) / 3;
+        data[i*channel_count + 1] = data[i*channel_count];
+        data[i*channel_count + 2] = data[i*channel_count];
+    }
+    write_image_data("image_out.bmp", data, width, height);
+}
+
+void color_desaturate(char *source_path) {
+    int width, height, channel_count;
+    unsigned char* data;
+    char *destination_path = "image_out.bmp";
+    int new_val, j, i;
+
+    if (read_image_data(source_path, &data, &width, &height, &channel_count) != 0) {
+        for ( i = 0; i < height; i++) {
+            for (j = 0; j < width; j++) {
+                int position = (i * width + j) * channel_count;
+
+                int R = data[position];
+                int G = data[position + 1];
+                int B = data[position + 2];
+
+                new_val = (R < G) ? ((R < B) ? R : B) : ((G < B) ? G : B);
+                int max_val = (R > G) ? ((R > B) ? R : B) : ((G > B) ? G : B);
+
+                new_val = (new_val + max_val) / 2;
+
+                data[position] = new_val;
+                data[position + 1] = new_val;
+                data[position + 2] = new_val;
+            }
+        }
+    }
+
+    write_image_data(destination_path, data, width, height);
+}
