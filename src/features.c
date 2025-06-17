@@ -155,12 +155,17 @@ void min_component (char *source_path, char c) {
     int i, j;
     int nr, xr, yr, min_R ;
     int ng, xg, yg, min_G ;
+    int nb, xb, yb, min_B ;
+
 
     if (read_image_data(source_path, &data, &width, &height, &channel_count) != 0) {
         min_R = data[0];
         min_G = data[1] ;
+        min_B = data[2];
         nr = 0 ;
         ng = 1 ;
+        nb = 2;
+
         for (i = 3; i < width*height*3; i = i + 3) {
             if (data[i] < min_R){
                 min_R = data[i];
@@ -169,6 +174,10 @@ void min_component (char *source_path, char c) {
             if (data[i+1] < min_G) {
                 min_G = data[i+1] ;
                 ng = i/3 ;
+            }
+            if (data[i+2] < min_B) {
+                min_B = data[i+2] ;
+                nb = i/3 ;
             }
         }
         for (j = 0; j < height; j++) {
@@ -180,6 +189,10 @@ void min_component (char *source_path, char c) {
                 xg = j ;
                 yg = ng - width*xg ;
             }
+            if (nb >= width*j && nb <= width*j + width - 1) {
+                xb = j ;
+                yb = nb - width*xb ;
+            }
         }
 
         if (c == 'R') {
@@ -187,6 +200,9 @@ void min_component (char *source_path, char c) {
         }
         else if (c == 'G') {
             printf ("min_component G (%d, %d): %d\n", yg, xg, min_G) ;
+        }
+        else if (c == 'B') {
+            printf ("min_component B (%d, %d): %d\n", yb, xb, min_B) ;
         }
     }
     else {
