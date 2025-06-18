@@ -464,3 +464,47 @@ void color_gray_luminance(char *source_path){
     }
     write_image_data("image_out.bmp", data, width, height);
 }
+
+void mirror_total(char *source_path) {
+    int width;
+    int height;
+    int channel_count;
+    unsigned char *data;
+ 
+    if (read_image_data(source_path, &data, &width, &height, &channel_count) != 0) {
+        for (int ligne = 0; ligne < height / 2; ligne++) {
+            for (int colonne = 0; colonne < width; colonne++) {
+                int top_left = (ligne * width + colonne) * channel_count;
+                int bottom_right = ((height - 1 - ligne) * width + (width - 1 - colonne)) * channel_count;
+ 
+                for (int c = 0; c < channel_count; c++) {
+                    unsigned char temp = data[top_left + c];
+                    data[top_left + c] = data[bottom_right + c];
+                    data[bottom_right + c] = temp;
+                }
+            }
+        }
+ 
+        if (height % 2 != 0) {
+            int mi_ligne = height / 2;
+            for (int colonne = 0; colonne < width / 2; colonne++) {
+                int left = (mi_ligne * width + colonne) * channel_count;
+                int right = (mi_ligne * width + (width - 1 - colonne)) * channel_count;
+ 
+                for (int c = 0; c < channel_count; c++) {
+                    unsigned char temp = data[left + c];
+                    data[left + c] = data[right + c];
+                    data[right + c] = temp;
+                }
+            }
+        }
+ 
+        if (write_image_data("image_out.bmp", data, width, height)) {
+            printf("Symetrie totale appliquee avec succes.\n");
+        } else {
+            printf("ERROR\n");
+        }
+    } else {
+        printf("Erreur : impossible de lire l'image.\n");
+    }
+}
