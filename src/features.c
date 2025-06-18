@@ -245,14 +245,14 @@ void max_component (char *source_path, char c) {
     int channel_count ;
     unsigned char *data ;
     int i, j ;
-    int nr, xr, yr, max_R ;
+    int nr, xr, yr, max_R;
     int nb, xb, yb, max_B;
     int ng, xg, yg, max_G;
 
     if (read_image_data(source_path, &data, &width, &height, &channel_count) != 0) {
-        max_R = data[0] ;
+        max_R = data[0];
         max_B = data[2];
-        max_G = data[1] ;
+        max_G = data[1];
         nr = 0 ;
         nb = 2;
         ng = 1 ;
@@ -300,6 +300,7 @@ void max_component (char *source_path, char c) {
         printf("ERROR");
     }
 }
+
 void min_pixel (char *source_path) {
     int width ;
     int height ;
@@ -331,7 +332,7 @@ void min_pixel (char *source_path) {
 }
 
 
-void mirror_vertical(char *source_path) {
+void mirror_horizontal(char *source_path) {
     int width;
     int height;
     int channel_count;
@@ -404,7 +405,7 @@ void color_desaturate(char *source_path) {
 
     write_image_data(destination_path, data, width, height);
 }
-void mirror_horizontal(char *source_path) {
+void mirror_vertical(char *source_path) {
     int width;
     int height;
     int channel_count;
