@@ -1,0 +1,18 @@
+/home/runner/work/pgi-2025-the_scarlet_giraffes/pgi-2025-the_scarlet_giraffes/src/main.c: In function ‘main’:
+/home/runner/work/pgi-2025-the_scarlet_giraffes/pgi-2025-the_scarlet_giraffes/src/main.c:79:5: warning: implicit declaration of function ‘color_gray’; did you mean ‘color_green’? [-Wimplicit-function-declaration]
+   79 |     color_gray(configuration.filenames[0]);
+      |     ^~~~~~~~~~
+      |     color_green
+/home/runner/work/pgi-2025-the_scarlet_giraffes/pgi-2025-the_scarlet_giraffes/src/main.c:87:5: warning: implicit declaration of function ‘color_invert’ [-Wimplicit-function-declaration]
+   87 |     color_invert (configuration.filenames[0]) ;
+      |     ^~~~~~~~~~~~
+/home/runner/work/pgi-2025-the_scarlet_giraffes/pgi-2025-the_scarlet_giraffes/src/main.c:91:5: warning: implicit declaration of function ‘color_gray_luminance’ [-Wimplicit-function-declaration]
+   91 |     color_gray_luminance (configuration.filenames[0]) ;
+      |     ^~~~~~~~~~~~~~~~~~~~
+/home/runner/work/pgi-2025-the_scarlet_giraffes/pgi-2025-the_scarlet_giraffes/src/main.c:96:5: warning: implicit declaration of function ‘mirror_total’; did you mean ‘mirror_vertical’? [-Wimplicit-function-declaration]
+   96 |     mirror_total(configuration.filenames[0]);
+      |     ^~~~~~~~~~~~
+      |     mirror_vertical
+/home/runner/work/pgi-2025-the_scarlet_giraffes/pgi-2025-the_scarlet_giraffes/src/main.c:100:5: warning: implicit declaration of function ‘color_desaturate’ [-Wimplicit-function-declaration]
+  100 |     color_desaturate(configuration.filenames[0]);
+      |     ^~~~~~~~~~~~~~~~
