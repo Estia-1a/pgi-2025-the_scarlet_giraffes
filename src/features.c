@@ -1,5 +1,6 @@
 #include <estia-image.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "features.h"
 #include "utils.h"
@@ -508,4 +509,38 @@ void mirror_total(char *source_path) {
     } else {
         printf("Erreur : impossible de lire l'image.\n");
     }
+}
+
+void rotate_acw(char *sourcepath){
+    int width, height, channel_count;
+    unsigned char *data;
+
+    if ( !read_image_data(sourcepath, &data, &width, &height, &channel_count)){
+        printf("Erreur");
+        return;
+    }
+
+    unsigned char *rotation = malloc(width * height * channel_count);
+    if(!rotation) {
+        printf("Erreur");
+        free(data);
+        return;
+    }
+
+    for (int y = 0; y< height; y++){
+        for (int x = 0; x< width; x++) {
+            int src = (y * width + x) * channel_count;
+            int xrot = y;
+            int yrot = width - 1 - x;
+            int idx = (yrot * height + xrot) * channel_count;
+
+            for (int c = 0; c < channel_count; c++) {
+                rotation[idx + c] = data[src + c];
+            }
+        }
+    }
+    write_image_data("image_out.bmp",rotation, height, width);
+
+    free(data);
+    free(rotation);
 }
