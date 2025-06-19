@@ -46,4 +46,6 @@ void rotate_acw(char *source_path);
 
 void rotate_cw(char *source_path);
 
+void scale_bilinear(char *source_path, float scale_x, float scale_y);
+
 #endif

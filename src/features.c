@@ -578,3 +578,51 @@ void rotate_cw(char *sourcepath){
     free(data);
     free(rotation);
 }
+
+void scale_bilinear(char *chemin_image, float scale_x, float scale_y) {
+    int largeur, hauteur, nb_canaux;
+    unsigned char *donnees;
+
+    if (read_image_data(chemin_image, &donnees, &largeur, &hauteur, &nb_canaux) != 0) {
+        int nouvelle_largeur = largeur * scale_x;
+        int nouvelle_hauteur = hauteur * scale_y;
+
+        unsigned char *image_redim = malloc(nouvelle_largeur * nouvelle_hauteur * nb_canaux);
+
+
+        for (int ligne = 0; ligne < nouvelle_hauteur; ligne++) {
+            float y_source = (float)ligne / scale_y;
+            int y0 = (int)y_source;
+            int y1 = y0 + 1;
+            if (y1 >= hauteur) y1 = hauteur - 1;
+            float dy = y_source - y0;
+
+            for (int colonne = 0; colonne < nouvelle_largeur; colonne++) {
+                float x_source = (float)colonne / scale_x;
+                int x0 = (int)x_source;
+                int x1 = x0 + 1;
+                if (x1 >= largeur) x1 = largeur - 1;
+                float dx = x_source - x0;
+
+                for (int canal = 0; canal < nb_canaux; canal++) {
+                    unsigned char Q11 = donnees[(y0 * largeur + x0) * nb_canaux + canal];
+                    unsigned char Q12 = donnees[(y0 * largeur + x1) * nb_canaux + canal];
+                    unsigned char Q21 = donnees[(y1 * largeur + x0) * nb_canaux + canal];
+                    unsigned char Q22 = donnees[(y1 * largeur + x1) * nb_canaux + canal];
+
+                    float P1 = Q11 * (1 - dx) + Q12 * dx;
+                    float P2 = Q21 * (1 - dx) + Q22 * dx;
+                    float P = P1 * (1 - dy) + P2 * dy;
+
+                    image_redim[(ligne * nouvelle_largeur + colonne) * nb_canaux + canal] = (unsigned char)(P);
+                }
+            }
+        }
+
+        write_image_data("image_out.bmp", image_redim, nouvelle_largeur, nouvelle_hauteur);
+
+    } else {
+        printf("ERROR.\n");
+    }
+}
+

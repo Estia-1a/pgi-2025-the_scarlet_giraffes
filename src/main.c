@@ -111,6 +111,13 @@ int main(int argc, char **argv) {
   if (strncmp(configuration.command, "rotate_cw", 9) == 0){
     rotate_cw(configuration.filenames[0]);
 ;  }
+
+  if (strncmp(configuration.command, "scale_bilinear", 14) == 0) {
+    float scale_x = atof(argv[5]);
+    float scale_y = atof(argv[6]);
+    scale_bilinear(configuration.filenames[0], scale_x, scale_y);
+  }
+
   /*
    * TO COMPLETE
    */
