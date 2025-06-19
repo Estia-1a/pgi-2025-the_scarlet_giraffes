@@ -1,5 +1,6 @@
 #include <estia-image.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "features.h"
 #include "utils.h"
@@ -398,5 +399,34 @@ void mirror_horizontal(char *source_path) {
         
     } else {
         printf("ERROR\n");
+    }
+}
+
+void scale_nearest(char *chemin_image, float facteur) {
+    int largeur, hauteur, nb_canaux;
+    unsigned char *donnees;
+ 
+    if (read_image_data(chemin_image, &donnees, &largeur, &hauteur, &nb_canaux) != 0) {
+        int nouvelle_largeur = largeur * facteur;
+        int nouvelle_hauteur = hauteur * facteur;
+ 
+        unsigned char *resized = malloc(nouvelle_largeur * nouvelle_hauteur * nb_canaux);
+ 
+        for (int y = 0; y < nouvelle_hauteur; y++) {
+            int src_y = y / facteur;
+            if (src_y >= hauteur) src_y = hauteur - 1;
+ 
+            for (int x = 0; x < nouvelle_largeur; x++) {
+                int src_x = x / facteur;
+                if (src_x >= largeur) src_x = largeur - 1;
+ 
+                for (int c = 0; c < nb_canaux; c++) {
+                    resized[(y * nouvelle_largeur + x) * nb_canaux + c] = donnees[(src_y * largeur + src_x) * nb_canaux + c];
+                }
+            }
+        }
+        write_image_data("image_out.bmp", resized, nouvelle_largeur, nouvelle_hauteur);
+    } else {
+        printf("ERROR.\n");
     }
 }

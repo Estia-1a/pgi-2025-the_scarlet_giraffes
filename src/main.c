@@ -94,6 +94,12 @@ int main(int argc, char **argv) {
   if (strncmp(configuration.command, "mirror_horizontal", 17) == 0) {
     mirror_horizontal(configuration.filenames[0]);
   }
+
+  if (strcmp(configuration.command, "scale_nearest") ==0) {
+    float facteur = atof(argv[5]);
+    scale_nearest(configuration.filenames[0], facteur);
+  }
+  
   /*
    * TO COMPLETE
    */
