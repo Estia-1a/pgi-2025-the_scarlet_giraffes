@@ -83,9 +83,18 @@ int main(int argc, char **argv) {
     mirror_vertical(configuration.filenames[0]) ;
   }
 
+  if ( strncmp( configuration.command, "color_invert", 12 ) == 0 ) {
+    color_invert (configuration.filenames[0]) ;
+  }
 
+  if ( strncmp( configuration.command, "color_gray_luminance", 20 ) == 0 ) {
+    color_gray_luminance (configuration.filenames[0]) ;
+  }
   
 
+  if (strncmp(configuration.command, "mirror_total", 12) == 0) {
+    mirror_total(configuration.filenames[0]);
+  }
 
   if (strncmp(configuration.command, "color_desaturate", 16) == 0) {
     color_desaturate(configuration.filenames[0]);
@@ -94,6 +103,28 @@ int main(int argc, char **argv) {
   if (strncmp(configuration.command, "mirror_horizontal", 17) == 0) {
     mirror_horizontal(configuration.filenames[0]);
   }
+
+  if (strncmp(configuration.command, "rotate_acw", 10) == 0){
+    rotate_acw(configuration.filenames[0]);
+  }
+
+  if (strncmp(configuration.command, "rotate_cw", 9) == 0){
+    rotate_cw(configuration.filenames[0]);
+;  }
+
+  if (strncmp(configuration.command, "scale_bilinear", 14) == 0) {
+    float scale_x = atof(argv[5]);
+    float scale_y = atof(argv[6]);
+    scale_bilinear(configuration.filenames[0], scale_x, scale_y);
+  }
+
+  if (strcmp(configuration.command, "scale_crop") == 0) {
+        int cx = atoi(argv[5]);
+        int cy = atoi(argv[6]);
+        int w = atoi(argv[7]);
+        int h = atoi(argv[8]);
+        scale_crop(configuration.filenames[0], cx, cy, w, h);
+    }
 
   if (strcmp(configuration.command, "scale_nearest") ==0) {
     float facteur = atof(argv[5]);
