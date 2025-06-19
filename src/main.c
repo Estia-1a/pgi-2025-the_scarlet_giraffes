@@ -118,6 +118,13 @@ int main(int argc, char **argv) {
     scale_bilinear(configuration.filenames[0], scale_x, scale_y);
   }
 
+  if (strcmp(configuration.command, "scale_crop") == 0) {
+        int cx = atoi(argv[5]);
+        int cy = atoi(argv[6]);
+        int w = atoi(argv[7]);
+        int h = atoi(argv[8]);
+        scale_crop(configuration.filenames[0], cx, cy, w, h);
+    }
   /*
    * TO COMPLETE
    */

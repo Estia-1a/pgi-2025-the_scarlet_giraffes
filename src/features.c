@@ -626,3 +626,35 @@ void scale_bilinear(char *chemin_image, float scale_x, float scale_y) {
     }
 }
 
+void scale_crop(char *chemin_image, int center_x, int center_y, int crop_width, int crop_height) {
+    int largeur, hauteur, nb_canaux;
+    unsigned char *donnees;
+
+    if (read_image_data(chemin_image, &donnees, &largeur, &hauteur, &nb_canaux) != 0) {
+        int x0 = center_x - crop_width / 2;
+        int y0 = center_y - crop_height / 2;
+
+        if (x0 < 0) x0 = 0;
+        if (y0 < 0) y0 = 0;
+        if (x0 + crop_width > largeur) crop_width = largeur - x0;
+        if (y0 + crop_height > hauteur) crop_height = hauteur - y0;
+
+        unsigned char *image_crop = malloc(crop_width * crop_height * nb_canaux);
+
+        for (int y = 0; y < crop_height; y++) {
+            for (int x = 0; x < crop_width; x++) {
+                for (int c = 0; c < nb_canaux; c++) {
+                    int source_index = ((y0 + y) * largeur + (x0 + x)) * nb_canaux + c;
+                    int dest_index = (y * crop_width + x) * nb_canaux + c;
+                    image_crop[dest_index] = donnees[source_index];
+                }
+            }
+        }
+
+        write_image_data("image_out.bmp", image_crop, crop_width, crop_height);
+    } else {
+        printf("ERROR.\n");
+    }
+}
+
+

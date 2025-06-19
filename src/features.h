@@ -48,4 +48,6 @@ void rotate_cw(char *source_path);
 
 void scale_bilinear(char *source_path, float scale_x, float scale_y);
 
+void scale_crop(char *source_path, int center_x, int center_y, int crop_width, int crop_height);
+
 #endif
